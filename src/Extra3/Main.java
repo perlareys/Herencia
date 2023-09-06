@@ -24,12 +24,12 @@ public class Main {
         int opcion;
         ArrayList<Alojamiento> alojamientos = new ArrayList<>();
 
-        alojamientos.add(new Hotel5Estrellas(2, 5, 10, 50, 120, 10, Gimnasio.A, "XO", 300, "Central", "Monterrey", "Mexico", "Reyes"));
-        alojamientos.add(new Hotel4Estrellas(20, 2, 5, Gimnasio.A, "XL", 300, "Scape", "Lambayeque", "Chiclayo", "Perla"));
-        alojamientos.add(new Camping(20, 10, true, true, 200, "Camping A", "Cuzco", "Cuzco", "Isabel"));
-        alojamientos.add(new Camping(20, 10, false, false, 200, "Camping B", "Cuzco", "Cuzco", "Isabel"));
-        alojamientos.add(new Residencias(25, false, true, true, 150, "Olivos", "Lima", "Miraflores", "Serrato"));
-        alojamientos.add(new Residencias(25, true, true, true, 150, "Playa", "Lima", "Miraflores", "Serrato"));
+        alojamientos.add(new Hotel5Estrellas(2, 5, 10, 50, 120, 10, Gimnasio.A, "XO", 300, "Central", "Monterrey", "Mexico", "Ab"));
+        alojamientos.add(new Hotel4Estrellas(20, 2, 5, Gimnasio.A, "XL", 300, "Scape", "Lambayeque", "Chiclayo", "Ab"));
+        alojamientos.add(new Camping(20, 10, true, true, 200, "Camping A", "Cuzco", "Cuzco", "Ab"));
+        alojamientos.add(new Camping(20, 10, false, false, 200, "Camping B", "Cuzco", "Cuzco", "Ab"));
+        alojamientos.add(new Residencias(25, false, true, true, 150, "Olivos", "Lima", "Miraflores", "Ab"));
+        alojamientos.add(new Residencias(25, true, true, true, 150, "Playa", "Lima", "Miraflores", "Ab"));
 
         do {
             System.out.println("-----------------------MENÚ-----------------------");
