@@ -5,48 +5,55 @@
  */
 package Ejercicio2;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Perla
  */
 public class Lavadora extends Electrodomestico {
 
-    private double carga;
+    Scanner leer = new Scanner(System.in);
+    private Integer carga;
 
-    public Lavadora(double carga) {
-        super();
-        this.carga = carga;
+    public Lavadora() {
     }
 
-    public Lavadora(double carga, double precio, String color, Consumo consumoEnergetico, double peso) {
+    public Lavadora(Integer carga, Integer precio, String color, char consumoEnergetico, Integer peso) {
         super(precio, color, consumoEnergetico, peso);
         this.carga = carga;
     }
 
-    public double getCarga() {
+    public Lavadora crearLavadora() {
+        super.crearElectrodomestico();
+        System.out.println("Ingresar capacidad de lavadora:");
+        carga = leer.nextInt();
+        Lavadora lavadora = new Lavadora(carga, super.getPrecio(), super.getColor(), super.getConsumoEnergetico(), super.getPeso());
+        return lavadora;
+    }
+
+    private Integer precioFinal(Lavadora lavadora) {
+        Integer precioFinal = lavadora.getPrecio();
+        if (lavadora.getCarga() > 30) {
+            precioFinal += 500;
+        }
+        //lavadora.setPrecio(precioFinal);
+        return precioFinal;
+    }
+
+    public String caracteristicas() {
+        Integer precioFinal = precioFinal(this);
+        return super.caracteristicas() + "\n"
+                + "Capacidad          :" + carga + "kg" + "\n"
+                + "Precio final       :" + precioFinal;
+    }
+
+    public Integer getCarga() {
         return carga;
     }
 
-    public void setCarga(double carga) {
+    public void setCarga(Integer carga) {
         this.carga = carga;
     }
 
-    public Lavadora crearLavadora() {
-        Electrodomestico e = crearElectrodomestico();
-        System.out.println("Ingresar la carga de la lavadora");
-        carga = leer.nextDouble();
-        Lavadora lavadora = new Lavadora(carga, e.getPrecio(), e.getColor(), e.getConsumoEnergetico(), e.getPeso());
-        return precioFinal(lavadora);
-    }
-
-    private Lavadora precioFinal(Lavadora lavadora) {
-        double precio = lavadora.getPrecio();
-        double carga = lavadora.getCarga();
-
-        if (carga > 30) {
-            precio += 500;
-        }
-        lavadora.setPrecio(precio);
-        return lavadora;
-    }
 }

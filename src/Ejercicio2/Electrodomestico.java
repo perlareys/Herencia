@@ -13,26 +13,101 @@ import java.util.Scanner;
  */
 public class Electrodomestico {
 
-    private double precio;
+    Scanner leer = new Scanner(System.in);
+    private Integer precio;
     private String color;
-    private Consumo consumoEnergetico;
-    private double peso;
+    private char consumoEnergetico;
+    private Integer peso;
 
     public Electrodomestico() {
     }
 
-    public Electrodomestico(double precio, String color, Consumo consumoEnergetico, double peso) {
+    public Electrodomestico(Integer precio, String color, char consumoEnergetico, Integer peso) {
         this.precio = precio;
         this.color = color;
         this.consumoEnergetico = consumoEnergetico;
         this.peso = peso;
     }
 
-    public double getPrecio() {
+    public char comprobarConsumo(char letra) {
+        letra = Character.toUpperCase(letra);
+        if (letra >= 'A' && letra <= 'F') {
+            return letra;
+        }
+        return 'F';
+    }
+
+    public String comprobarColor(String color) {
+        String[] colores = {"blanco", "negro", "rojo", "azul", "gris"};
+        for (String aux : colores) {
+            if (aux.equals(color.toLowerCase())) {
+                return aux;
+            }
+        }
+        return "blanco";
+    }
+
+    public Electrodomestico crearElectrodomestico() {
+        Integer precioBase = 1000;
+        System.out.println("Ingresar color: ");
+        color = leer.nextLine();
+        System.out.println("Ingresar el consumo energético: (A-F) ");
+        char letra = leer.next().charAt(0);
+        consumoEnergetico = comprobarConsumo(letra);
+        System.out.println("Ingresar peso: ");
+        peso = leer.nextInt();
+        Electrodomestico electrodomestico = new Electrodomestico(precio, color, consumoEnergetico, peso);
+        precioConsumo(electrodomestico);
+        precioTamanio(electrodomestico);
+        precio= precioBase+precioConsumo(electrodomestico)+precioTamanio(electrodomestico);
+        return electrodomestico;
+    }
+
+    private Integer precioConsumo(Electrodomestico electrodomestico) {
+        Integer finalConsumo = 0;
+
+        switch (electrodomestico.getConsumoEnergetico()) {
+            case 'A':
+                finalConsumo += 1000;
+                break;
+            case 'B':
+                finalConsumo += 800;
+                break;
+            case 'C':
+                finalConsumo += 600;
+                break;
+            case 'D':
+                finalConsumo += 500;
+                break;
+            case 'E':
+                finalConsumo += 300;
+                break;
+            case 'F':
+                finalConsumo += 100;
+                break;
+        }
+        return finalConsumo;
+    }
+
+    private Integer precioTamanio(Electrodomestico electrodomestico) {
+        Integer finalTamanio = 0;
+        if (electrodomestico.getPeso() >= 1 && electrodomestico.getPeso() <= 19) {
+            finalTamanio += 100;
+        } else if (electrodomestico.getPeso() >= 20 && electrodomestico.getPeso() <= 49) {
+            finalTamanio += 500;
+        } else if (electrodomestico.getPeso() >= 50 && electrodomestico.getPeso() <= 79) {
+            finalTamanio += 800;
+        } else if (electrodomestico.getPeso() >= 80) {
+            finalTamanio += 1000;
+        }
+        return finalTamanio;
+    }
+
+    public Integer getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Integer precio) {
         this.precio = precio;
     }
 
@@ -44,94 +119,28 @@ public class Electrodomestico {
         this.color = color;
     }
 
-    public Consumo getConsumoEnergetico() {
+    public char getConsumoEnergetico() {
         return consumoEnergetico;
     }
 
-    public void setConsumoEnergetico(Consumo consumoEnergetico) {
+    public void setConsumoEnergetico(char consumoEnergetico) {
         this.consumoEnergetico = consumoEnergetico;
     }
 
-    public double getPeso() {
+    public Integer getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(Integer peso) {
         this.peso = peso;
-    } 
-    
-    Scanner leer = new Scanner(System.in);
-
-    public Consumo comprobarConsumoEnergetico(char letra) {
-        for (Consumo aux : Consumo.values()) {
-            if (aux.name().equals(String.valueOf(letra))) {
-                return aux;
-            }
-        }
-        return Consumo.F;
     }
 
-    public String comprobarColor(String color) {
-        String[] colores = {"blanco", "negro", "rojo", "azul", "gris"};
-
-        for (String aux : colores) {
-            if (aux.equals(color.toLowerCase())) {
-                return color.toLowerCase();
-            }
-        }
-        return "blanco";
-    }
-
-    public Electrodomestico crearElectrodomestico() {
-
-        precio = 1000;
-        System.out.println("Ingrese el color del electrodoméstico");
-        color = leer.nextLine();
-        String comprobar = comprobarColor(color);
-        System.out.println("Ingrese el consumo energético (letra entre A y F)");
-        char consumo = leer.next().charAt(0);
-        Consumo consumoValido = comprobarConsumoEnergetico(consumo);
-        System.out.println("Ingresar peso del electrodoméstico");
-        peso = leer.nextDouble();
-
-        Electrodomestico electrodomestico = new Electrodomestico(precio, comprobar, consumoValido, peso);
-        return electrodomestico;
-    }
-
-    public double precioFinal(Electrodomestico electrodomestico) {
-        double precioFinal = electrodomestico.getPrecio();
-
-        switch (electrodomestico.getConsumoEnergetico()) {
-            case A:
-                precioFinal += 1000;
-                break;
-            case B:
-                precioFinal += 800;
-                break;
-            case C:
-                precioFinal += 600;
-                break;
-            case D:
-                precioFinal += 500;
-                break;
-            case E:
-                precioFinal += 300;
-                break;
-            case F:
-                precioFinal += 100;
-                break;
-        }
-        if (electrodomestico.getPeso() >= 1 && electrodomestico.getPeso() <= 19) {
-            precioFinal += 100;
-        } else if (electrodomestico.getPeso() >= 20 && electrodomestico.getPeso() <= 49) {
-            precioFinal += 500;
-        } else if (electrodomestico.getPeso() >= 50 && electrodomestico.getPeso() <= 79) {
-            precioFinal += 800;
-        } else if (electrodomestico.getPeso() >= 80) {
-            precioFinal += 1000;
-        }
-
-        return precioFinal;
+    public String caracteristicas() {
+        return "Características: " + "\n"
+                + "Precio base        :" + "1000" + "\n"
+                + "Color              :" + comprobarColor(color) + "\n"
+                + "Consumo energético :" + consumoEnergetico + "\n"
+                + "Peso               :" + peso + "kg";           
     }
 
 }

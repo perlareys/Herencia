@@ -11,25 +11,59 @@ package Ejercicio2;
  */
 public class Televisor extends Electrodomestico {
 
-    private double resolucion;
+    private Integer resolucion;
     private boolean TDT;
 
-    public Televisor(double resolucion, boolean TDT) {
-        this.resolucion = resolucion;
-        this.TDT = TDT;
+    public Televisor() {
     }
 
-    public Televisor(double resolucion, boolean TDT, double precio, String color, Consumo consumoEnergetico, double peso) {
+    public Televisor(Integer resolucion, boolean TDT, Integer precio, String color, char consumoEnergetico, Integer peso) {
         super(precio, color, consumoEnergetico, peso);
         this.resolucion = resolucion;
         this.TDT = TDT;
     }
 
-    public double getResolucion() {
+    public Televisor crearTelevisor() {
+        super.crearElectrodomestico();
+        System.out.println("Ingresar resolución en pulgadas");
+        resolucion = leer.nextInt();
+        System.out.println("¿Tiene TDT?");
+        System.out.println("1. Sí");
+        System.out.println("2. No");
+        Integer opcion = leer.nextInt();
+        if (opcion == 1) {
+            TDT = true;
+        } else if (opcion == 2) {
+            TDT = false;
+        }
+        Televisor tv = new Televisor(resolucion, TDT, super.getPrecio(), super.getColor(), super.getConsumoEnergetico(), super.getPeso());
+        return tv;
+    }
+
+    private double precioFinal(Televisor tv) {
+        double precioFinal = tv.getPrecio();
+        if (tv.getResolucion() > 40) {
+            precioFinal *= 1.3;
+        }
+        if (TDT = true) {
+            precioFinal += 500;
+        }
+        return precioFinal;
+    }
+
+    public String caracteristicas() {
+        double precioFinal = precioFinal(this);
+        return super.caracteristicas() + "\n"
+                + "Resolución (pulg.) :" + resolucion + "\n"
+                + "Tiene TDT          :" + TDT + "\n"
+                + "Precio Final       :" + precioFinal;
+    }
+
+    public Integer getResolucion() {
         return resolucion;
     }
 
-    public void setResolucion(double resolucion) {
+    public void setResolucion(Integer resolucion) {
         this.resolucion = resolucion;
     }
 
@@ -41,36 +75,4 @@ public class Televisor extends Electrodomestico {
         this.TDT = TDT;
     }
 
-    public Televisor crearTelevisor() {
-        Electrodomestico e2 = crearElectrodomestico();
-        System.out.println("Ingresar el tamaño en pulgadas");
-        resolucion = leer.nextDouble();
-        boolean td=false;
-        System.out.println("El televisor cuenta con TDT");
-        System.out.println("1. Sí");
-        System.out.println("2.No");
-        int opcion = leer.nextInt();
-        if (opcion == 1) {
-            td = true;
-        } else if (opcion == 2) {
-            td = false;
-        }
-        Televisor televisor = new Televisor(resolucion, td, e2.getPrecio(), e2.getColor(), e2.getConsumoEnergetico(), e2.getPeso());
-        return televisor;
-    }
-
-    private Televisor precioFinal(Televisor televisor) {
-        double pulgadas = televisor.getResolucion();
-        double precio = televisor.getPrecio();
-        boolean tdt = televisor.isTDT();
-
-        if (pulgadas > 40) {
-            precio *= 1.3;
-        }
-        if (tdt) {
-            precio += 500;
-        }
-        televisor.setPrecio(precio);
-        return televisor;
-    }
 }
